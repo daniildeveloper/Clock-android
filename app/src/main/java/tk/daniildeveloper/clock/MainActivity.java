@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity {
 
     Button alarmOn, alarmOff;
@@ -34,8 +36,12 @@ public class MainActivity extends AppCompatActivity {
         timePicker = (TimePicker) findViewById(R.id.timePicker);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
+        Calendar calendar = Calendar.getInstance();
+
 //        add listeners for buttons
         alarmOn.setOnClickListener(new View.OnClickListener() {
+            calendar.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
+
             @Override
             public void onClick(View view) {
                 setTimeText("Будильник включен");
