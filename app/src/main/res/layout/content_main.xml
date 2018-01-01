@@ -14,8 +14,42 @@
     tools:showIn="@layout/activity_main"
     tools:context="tk.daniildeveloper.clock.MainActivity">
 
-    <TextView
+    <TimePicker
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/timePicker" />
+
+    <Button
+        android:text="@string/alarm_on"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_below="@+id/timePicker"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/alarm_on" />
+
+    <Button
+        android:text="@string/alarm_off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timePicker"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/alarm_off" />
+
+    <TextView
+        android:text="@string/updateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alarm_on"
+        android:layout_toRightOf="@+id/alarm_on"
+        android:layout_toEndOf="@+id/alarm_on"
+        android:layout_marginLeft="43dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginTop="29dp"
+        android:id="@+id/updateText"
+        android:textSize="36sp" />
+
 </RelativeLayout>
