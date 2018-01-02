@@ -2,15 +2,15 @@ package tk.daniildeveloper.clock;
 
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     TextView updateText;
     TimePicker timePicker;
     AlarmManager alarmManager;
+    PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         final Calendar calendar = Calendar.getInstance();
+//        intent
+        final Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
 
 //        add listeners for buttons
         alarmOn.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +70,12 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 setTimeText("Будильник поставлен на " + hourString + " : " + minuteString);
+
+//                create pending intent
+                pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+//                alarm manager
+                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             }
         });
         alarmOff.setOnClickListener(new View.OnClickListener() {
