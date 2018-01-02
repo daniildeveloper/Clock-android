@@ -1,6 +1,8 @@
 package tk.daniildeveloper.clock;
 
+import android.annotation.TargetApi;
 import android.app.AlarmManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -36,15 +38,35 @@ public class MainActivity extends AppCompatActivity {
         timePicker = (TimePicker) findViewById(R.id.timePicker);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        Calendar calendar = Calendar.getInstance();
+        final Calendar calendar = Calendar.getInstance();
 
 //        add listeners for buttons
         alarmOn.setOnClickListener(new View.OnClickListener() {
-            calendar.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
 
+            @TargetApi(Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
-                setTimeText("Будильник включен");
+                calendar.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
+                calendar.set(Calendar.MINUTE, timePicker.getMinute());
+
+//
+                int hour = timePicker.getHour();
+                int minute = timePicker.getMinute();
+
+//                convert to string
+                String hourString = String.valueOf(hour);
+                String minuteString = String.valueOf(minute);
+
+                if (hour > 12) {
+                    hourString = String.valueOf(hour - 12);
+                }
+
+                if (minute < 10) {
+//                    12:5 -> 12:05
+                    minuteString = "0" + String.valueOf(minute);
+                }
+
+                setTimeText("Будильник поставлен на " + hourString + " : " + minuteString);
             }
         });
         alarmOff.setOnClickListener(new View.OnClickListener() {
